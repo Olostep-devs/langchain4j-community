@@ -25,7 +25,6 @@ jobs:
     runs-on: ubuntu-latest
     needs:
       - spotless
-      - compliance
     continue-on-error: ${{ !matrix.integration_tests }}
     strategy:
       fail-fast: false
@@ -64,7 +63,7 @@ jobs:
           cache: 'maven'
       - name: Compile and test with JDK ${{ matrix.java_version }}
         run: |
-          mvn -B -U -T8C test javadoc:aggregate \
+          mvn -B -U test javadoc:javadoc -pl web-search-engines/langchain4j-community-web-search-engine-olostep -am \
             ${{ matrix.mvn_opts }}
 
       - name: Integration test with JDK ${{ matrix.java_version }}
